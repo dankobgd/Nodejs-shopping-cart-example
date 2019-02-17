@@ -3,7 +3,11 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./bin/server"
+    "start": "nodemon ./bin/server",
+    "knex:make": "knex migrate:make --knexfile db/knexfile.js",
+    "knex:migrate": "knex migrate:latest --knexfile db/knexfile.js",
+    "knex:rollback": "knex migrate:rollback --knexfile db/knexfile.js",
+    "knex:seed": "knex seed:run --knexfile db/knexfile.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -14,7 +18,9 @@
     "express-handlebars": "^3.0.0",
     "express-session": "^1.15.6",
     "http-errors": "~1.6.2",
-    "morgan": "~1.9.0"
+    "knex": "^0.16.3",
+    "morgan": "~1.9.0",
+    "sqlite3": "^4.0.6"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",

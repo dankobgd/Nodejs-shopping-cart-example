@@ -7,12 +7,21 @@ const defaultConfig = {
 };
 
 const developmentConfig = {
-
+  db: {
+    client: 'sqlite3',
+    name: 'node-ecommerce',
+    filename: '../db/shopping-cart',
+    migrationsTableName: 'knex_migrations',
+    migrationsDirectory: './migrations/',
+    seedsDirectory: './seeds/',
+  },
+  session: {
+    secret: process.env.SESSION_SECRET,
+  },
+  email: {},
 };
 
-const productionConfig = {
-
-};
+const productionConfig = {};
 
 function getEnvironmentConfig(env) {
   switch (env) {
