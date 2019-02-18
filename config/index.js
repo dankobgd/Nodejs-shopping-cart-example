@@ -9,11 +9,11 @@ const defaultConfig = {
 const developmentConfig = {
   db: {
     client: 'sqlite3',
-    name: 'node-ecommerce',
-    filename: '../db/shopping-cart',
+    name: 'shop',
+    filename: '../db/shop.db',
     migrationsTableName: 'knex_migrations',
-    migrationsDirectory: './migrations/',
-    seedsDirectory: './seeds/',
+    migrationsDirectory: '../db/migrations/',
+    seedsDirectory: '../db/seeds/',
   },
   session: {
     secret: process.env.SESSION_SECRET,
