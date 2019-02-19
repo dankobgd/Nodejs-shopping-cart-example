@@ -1,31 +1,47 @@
-const config = require('../config/index');
+const path = require('path');
 
 module.exports = {
   development: {
-    client: config.db.client,
+    client: 'sqlite3',
     connection: {
-      filename: config.db.filename,
+      filename: path.join(__dirname, './shop.db'),
     },
     migrations: {
-      tableName: config.db.migrationsTableName,
-      directory: config.db.migrationsDirectory,
-      seeds: config.db.seedsDirectory,
+      tableName: 'knex_migrations',
+      directory: path.join(__dirname, './migrations/'),
+      seeds: path.join(__dirname, './seeds/'),
+    },
+  },
+
+  sex: {
+    client: 'sqlite3',
+    connection: {
+      filename: path.join(__dirname, './shop.db'),
+    },
+    migrations: {
+      tableName: 'knex_migrations',
+      directory: path.join(__dirname, './migrations/'),
+      seeds: path.join(__dirname, './seeds/'),
     },
   },
 
   production: {
-    client: config.db.client,
+    client: 'pg',
+    version: '7.2',
     connection: {
-      database: config.db.dbName,
-      user: config.db.user,
-      password: config.db.password,
+      host: process.env.DATABASE_HOST,
+      user: process.env.DATABASE_USER,
+      password: process.env.DATABASE_PASSWORD,
+      database: process.env.DATABASE_NAME,
     },
     pool: {
       min: 2,
       max: 10,
     },
     migrations: {
-      tableName: config.db.migrationsName,
+      tableName: 'knex_migrations',
+      directory: './migrations/',
+      seeds: './seeds/',
     },
   },
 };

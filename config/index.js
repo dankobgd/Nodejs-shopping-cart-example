@@ -7,21 +7,18 @@ const defaultConfig = {
 };
 
 const developmentConfig = {
-  db: {
-    client: 'sqlite3',
-    name: 'shop',
-    filename: '../db/shop.db',
-    migrationsTableName: 'knex_migrations',
-    migrationsDirectory: '../db/migrations/',
-    seedsDirectory: '../db/seeds/',
-  },
   session: {
     secret: process.env.SESSION_SECRET,
   },
   email: {},
 };
 
-const productionConfig = {};
+const productionConfig = {
+  session: {
+    secret: process.env.SESSION_SECRET,
+  },
+  email: {},
+};
 
 function getEnvironmentConfig(env) {
   switch (env) {

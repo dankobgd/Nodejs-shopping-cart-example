@@ -4,11 +4,11 @@
   "private": true,
   "scripts": {
     "start": "nodemon ./bin/server",
-    "knex:make": "knex migrate:make --knexfile db/knexfile.js",
-    "knex:migrate": "knex migrate:latest --knexfile db/knexfile.js",
-    "knex:rollback": "knex migrate:rollback --knexfile db/knexfile.js",
-    "knex:makeseed": "knex seed:make --knexfile db/knexfile.js",
-    "knex:seed": "knex seed:run --knexfile db/knexfile.js"
+    "knex:mgmk": "knex --knexfile db/knexfile.js migrate:make",
+    "knex:mglt": "knex --knexfile db/knexfile.js migrate:latest",
+    "knex:mgrb": "knex --knexfile db/knexfile.js migrate:rollback",
+    "knex:sm": "knex --knexfile db/knexfile.js seed:make",
+    "knex:sr": "knex --knexfile db/knexfile.js seed:run"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
