@@ -1,3 +1,58 @@
-{{#section 'script'}}
-<script src="/javascripts/shop.js"></script>
+<div class="ui grid">
+  {{#each products}}
+  <div class="ui three column doubling stackable row stretched">
+    {{#each this}}
+    <div class="column">
+      <div class="ui fluid card">
+        <div class="ui image item-image">
+          <img src="{{thumbnail}}" />
+        </div>
+        <div class="content">
+          <a class="header">{{title}}</a>
+          <div class="description">{{truncate 100 description}}</div>
+        </div>
+        <div class="extra content item-card-footer">
+          <span class="price-tag header tiny">${{price}}</span>
+          <span class="add-to-cart">
+            <a href="#" class="ui button basic" role="button">Add to cart</a>
+          </span>
+        </div>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+  {{/each}}
+</div>
+
+
+
+
+
+
+
+
+
+{{!-- <div class="ui grid">
+  {{#each products}}
+  <div class="ui three column row doubling stackable">
+    {{#each this}}
+    <div class="column">
+      <div class="thumbnail">
+        <img src="{{thumbnail}}" alt="{{title}}" class="ui image fluid">
+        <div class="header">
+          <h3>{{title}}</h3>
+          <p class="description">{{description}}</p>
+          <div>
+            <div class="ui left floated column">${{price}}</div>
+            <a href="#" class="ui button basic right floated column" role="button">Add to cart</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+  {{/each}}
+</div> --}} {{#section 'script'}}
+<script src="/javascripts/shop.js">
+</script>
 {{/section}}

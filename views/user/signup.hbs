@@ -1,0 +1,55 @@
+<div class="ui form">
+  <form class="signup-form">
+    <div class="field">
+      <label>Field 1</label>
+      <input name="empty" type="text" placeholder="My first field...">
+    </div>
+    <div class="field">
+      <label>Field 2</label>
+      <input name="empty" type="text" placeholder="My second field...">
+    </div>
+    <div class="field">
+      <label>Dropdown</label>
+      <select class="ui dropdown" name="dropdown">
+        <option value="">Select</option>
+        <option value="male">Choice 1</option>
+        <option value="female">Choice 2</option>
+      </select>
+    </div>
+    <div class="ui submit button">Submit</div>
+    <div class="ui error message"></div>
+  </form>
+</div>
+
+
+
+{{#section 'script'}}
+<script>
+  $('form').form({
+    on: 'blur',
+    fields: {
+      empty: {
+        identifier: 'empty',
+        rules: [{
+          type: 'empty',
+          prompt: 'Please enter a value'
+        }]
+      },
+      dropdown: {
+        identifier: 'dropdown',
+        rules: [{
+          type: 'empty',
+          prompt: 'Please select a dropdown value'
+        }]
+      },
+      checkbox: {
+        identifier: 'checkbox',
+        rules: [{
+          type: 'checked',
+          prompt: 'Please check the checkbox'
+        }]
+      }
+    }
+  });
+</script>
+{{/section}}
