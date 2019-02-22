@@ -1,25 +1,23 @@
 const path = require('path');
 const express = require('express');
 const logger = require('morgan');
-const cookieParser = require('cookie-parser');
-const middleware = require('./middleware/middleware');
+const mw = require('./middleware/middleware');
 const configureViewEngine = require('./config/viewEngine');
 const routes = require('./app/routes');
 
 const app = express();
 
-// Use handlebars
 configureViewEngine(app);
 
+app.use(mw.createSession);
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
-app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(routes());
 
-app.use(middleware.forward404);
-app.use(middleware.errorHandler);
+app.use(mw.forward404);
+app.use(mw.errorHandler);
 
 module.exports = app;
