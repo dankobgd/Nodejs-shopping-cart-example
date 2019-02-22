@@ -6,23 +6,34 @@
   padding: 0;
 }
 
-/* shoping cart grid products */
-.item-card-footer {
+/* Table of Contents
+/* ------------------------------------------------------------
+  1. Shop page items
+*/
+
+/* 1. Shop page items */
+
+.shop-card-footer {
+  padding: 1rem;
+  margin-top: auto;
+}
+
+.equal-height {
   display: flex;
-  align-items: center;
 }
 
-.add-to-cart {
-  margin-left: auto;
+.product-card {
+  display: flex;
+  flex-direction: column;
 }
 
-.item-image {
-  height: 240px;
-  max-height: 240px;
+.image.product-image {
+  height: 280px;
+  width: auto;
 }
 
-.item-image img {
-  height: 100% !important;
-  width: 100% !important;
-  object-fit: cover !important;
+.image.product-image img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
 }

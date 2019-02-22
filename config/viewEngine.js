@@ -1,6 +1,6 @@
 const path = require('path');
 const exphbs = require('express-handlebars');
-const helpers = require('../public/handlebars/helpers');
+const helpers = require('../utils/handlebars/helpers');
 
 module.exports = app => {
   app.engine(

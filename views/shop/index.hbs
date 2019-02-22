@@ -1,50 +1,26 @@
-<div class="ui grid">
+<section class="section">
   {{#each products}}
-  <div class="ui three column doubling stackable row stretched">
+  <div class="row columns">
     {{#each this}}
-    <div class="column">
-      <div class="ui fluid card">
-        <div class="ui image item-image">
-          <img src="{{thumbnail}}" />
+    <div class="column is-one-third equal-height">
+      <div class="card large product-card">
+        <div class="card-image">
+          <figure class="image product-image">
+            <img src="{{thumbnail}}" alt="Image">
+          </figure>
         </div>
-        <div class="content">
-          <a class="header">{{title}}</a>
-          <div class="description">{{truncate 100 description}}</div>
+        <div class="card-content">
+          <div class="content">
+            <p class="title is-4 no-padding">{{title}}</p>
+            <span>{{truncate 40 description}}</span>
+          </div>
         </div>
-        <div class="extra content item-card-footer">
-          <span class="price-tag header tiny">${{price}}</span>
-          <span class="add-to-cart">
-            <a href="#" class="ui button basic" role="button">Add to cart</a>
-          </span>
-        </div>
-      </div>
-    </div>
-    {{/each}}
-  </div>
-  {{/each}}
-</div>
-
-
-
-
-
-
-
-
-
-{{!-- <div class="ui grid">
-  {{#each products}}
-  <div class="ui three column row doubling stackable">
-    {{#each this}}
-    <div class="column">
-      <div class="thumbnail">
-        <img src="{{thumbnail}}" alt="{{title}}" class="ui image fluid">
-        <div class="header">
-          <h3>{{title}}</h3>
-          <p class="description">{{description}}</p>
-          <div>
-            <div class="ui left floated column">${{price}}</div>
-            <a href="#" class="ui button basic right floated column" role="button">Add to cart</a>
+        <div class="level shop-card-footer">
+          <div class="level-left">
+            <span class="is-size-5"><strong>${{price}}</strong></span>
+          </div>
+          <div class="level-right">
+            <a href="#" class="button">Add to cart</a>
           </div>
         </div>
       </div>
@@ -52,7 +28,11 @@
     {{/each}}
   </div>
   {{/each}}
-</div> --}} {{#section 'script'}}
+</section>
+
+
+
+{{#section 'script'}}
 <script src="/javascripts/shop.js">
 </script>
 {{/section}}

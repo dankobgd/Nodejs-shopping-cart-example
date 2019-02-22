@@ -10,7 +10,5 @@ module.exports.get = async (req, res, next) => {
     productChunks.push(productsList.slice(i, i + chunkSize));
   }
 
-  console.log('chunks: ', productChunks);
-
   res.render('shop/index', {products: productChunks});
 };
