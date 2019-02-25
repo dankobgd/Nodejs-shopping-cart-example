@@ -5,7 +5,11 @@
         <h3 class="title has-text-grey">Log in</h3>
         <p class="subtitle has-text-grey">Please Log in to proceed</p>
         <div class="box">
-          <form>
+          <form action="/signin" method="POST">
+            {{> validationErrors}}
+            {{> authError}}
+            {{> success}}
+
             <div class="field">
               <div class="control">
                 <label for="email">Email</label>

@@ -9,7 +9,10 @@ const app = express();
 
 configureViewEngine(app);
 
+app.disable('x-powered-by');
 app.use(mw.createSession);
+app.use(mw.checkAuthSession);
+app.use(mw.setLocals);
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));

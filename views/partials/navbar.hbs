@@ -19,7 +19,22 @@
       </div>
     </div>
 
-
+    {{#if isAuthenticated}}
+    <div class="navbar-item has-dropdown is-hoverable">
+      <a class="navbar-link">
+        Account
+      </a>
+      <div class="navbar-dropdown">
+        <a class="navbar-item" href="/profile">
+          Profile
+        </a>
+        <hr class="navbar-divider">
+        <a class="navbar-item" href="/logout">
+          Logout
+        </a>
+      </div>
+    </div>
+    {{else}}
     <div class="navbar-end">
       <div class="navbar-item">
         <div class="buttons">
@@ -36,10 +51,12 @@
         </div>
       </div>
     </div>
+    {{/if}}
   </div>
 </nav>
 
 
+{{#section 'script'}}
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     const navbarBurgers = Array.from(document.querySelectorAll('.navbar-burger'));
@@ -55,3 +72,4 @@
     }
   });
 </script>
+{{/section}}

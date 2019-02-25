@@ -6,12 +6,7 @@
   padding: 0;
 }
 
-/* Table of Contents
-/* ------------------------------------------------------------
-  1. Shop page items
-*/
-
-/* 1. Shop page items */
+/* Shop page items */
 
 .shop-card-footer {
   padding: 1rem;
@@ -36,4 +31,28 @@
   height: 100%;
   width: 100%;
   object-fit: cover;
+}
+
+/* Error messages */
+
+.message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 0;
+}
+
+.message.error-message {
+  background: #b53645;
+  color: #fff;
+}
+
+.message.success-message {
+  background: #80d69b;
+  color: #fff;
+}
+
+/* Navbar */
+.navbar-menu {
+  padding: 0 1.5rem;
 }

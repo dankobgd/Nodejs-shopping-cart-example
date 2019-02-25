@@ -8,7 +8,13 @@ const defaultConfig = {
 
 const developmentConfig = {
   session: {
+    name: 'sid',
     secret: process.env.SESSION_SECRET,
+    resave: true,
+    saveUninitialized: true,
+    secure: ENV === 'production',
+    maxAge: 3600000, // 1 hour
+    expires: new Date(Date.now() + 3600000),
   },
   email: {},
 };

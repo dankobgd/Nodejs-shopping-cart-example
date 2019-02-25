@@ -2,6 +2,8 @@ const createError = require('http-errors');
 const csurf = require('csurf');
 const session = require('express-session');
 const config = require('../config');
+const knex = require('../db/connection');
+const UserService = require('../app/user/userService');
 
 //  Catch 404 and forward to error handler
 module.exports.forward404 = (req, res, next) => {
@@ -16,6 +18,13 @@ module.exports.errorHandler = (err, req, res, next) => {
   res.render('error');
 };
 
+module.exports.setLocals = (req, res, next) => {
+  res.locals.successMessage = req.session.successMessage;
+  delete req.session.successMessage;
+  res.locals.isAuthenticated = Boolean(req.user);
+  next();
+};
+
 // Async handler catch errors wrapper
 module.exports.catchErrors = fn => (req, res, next) => {
   Promise.resolve(fn(req, res, next)).catch(next);
@@ -23,35 +32,51 @@ module.exports.catchErrors = fn => (req, res, next) => {
 
 //  Create session
 module.exports.createSession = session({
+  name: config.session.name,
   secret: config.session.secret,
-  resave: true,
-  saveUninitialized: true,
-  cookie: {secure: false, maxAge: 3600000, expires: new Date(Date.now() + 3600000)},
+  resave: config.session.resave,
+  saveUninitialized: config.session.saveUninitialized,
+  cookie: {
+    secure: config.session.secure,
+    maxAge: config.session.maxAge,
+    expires: config.session.expires,
+  },
 });
 
 //  Session check
-module.exports.checkSession = (req, res, next) => {
-  // if (!(req.session && req.session.userId)) {
-  //   return next();
-  // }
-  // User.findById(req.session.userId, (err, user) => {
-  //   if (err) {
-  //     return next(err);
-  //   }
-  //   if (!user) {
-  //     return next();
-  //   }
-  //   user.password = undefined;
-  //   req.user = user;
-  //   res.locals.user = user;
-  //   next();
-  // });
+module.exports.checkAuthSession = async (req, res, next) => {
+  if (!(req.session && req.session.userId)) {
+    return next();
+  }
+
+  try {
+    const user = await knex('users').where('id', req.session.userId);
+
+    if (!user) {
+      return next();
+    }
+
+    const userData = UserService.toAuthJSON(user);
+    req.user = userData;
+    res.locals.user = userData;
+    next();
+  } catch (err) {
+    return next(err);
+  }
 };
 
-//  Require login
+// Redirect unauthenticated
 module.exports.requireLogin = (req, res, next) => {
   if (!req.user) {
     return res.redirect('/signin');
+  }
+  next();
+};
+
+// Redirect authenticated
+module.exports.noLogin = (req, res, next) => {
+  if (req.user) {
+    return res.redirect('/');
   }
   next();
 };
