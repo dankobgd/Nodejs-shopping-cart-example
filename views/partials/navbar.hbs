@@ -19,10 +19,20 @@
       </div>
     </div>
 
+
     {{#if isAuthenticated}}
+    <a class="navbar-item" href="/shopping-cart">
+      <span class="icon menu-cart-icon">
+        <i class="fas fa-shopping-cart"></i>
+      </span>
+      Shopping Cart
+      {{#if session.cart.totalQuantity}}
+      <span class="badge cart-qty-badge">{{session.cart.totalQuantity}}</span>
+      {{/if}}
+    </a>
     <div class="navbar-item has-dropdown is-hoverable">
       <a class="navbar-link">
-        Account
+        {{user.email}}
       </a>
       <div class="navbar-dropdown">
         <a class="navbar-item" href="/profile">

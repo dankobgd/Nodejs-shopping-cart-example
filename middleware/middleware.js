@@ -22,6 +22,7 @@ module.exports.setLocals = (req, res, next) => {
   res.locals.successMessage = req.session.successMessage;
   delete req.session.successMessage;
   res.locals.isAuthenticated = Boolean(req.user);
+  res.locals.session = req.session;
   next();
 };
 
@@ -65,7 +66,7 @@ module.exports.checkAuthSession = async (req, res, next) => {
   }
 };
 
-// Redirect unauthenticated
+// Redirect non-authenticated user
 module.exports.requireLogin = (req, res, next) => {
   if (!req.user) {
     return res.redirect('/signin');
@@ -73,8 +74,8 @@ module.exports.requireLogin = (req, res, next) => {
   next();
 };
 
-// Redirect authenticated
-module.exports.noLogin = (req, res, next) => {
+// Redirect authenticated user
+module.exports.redirectAuthed = (req, res, next) => {
   if (req.user) {
     return res.redirect('/');
   }

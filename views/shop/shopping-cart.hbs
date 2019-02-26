@@ -1,0 +1,53 @@
+<div class="hero">
+  <div class="hero-body">
+    {{#if products}}
+    {{#each products}}
+    <div class="columns is-centered" style="margin-bottom: 2rem;">
+      <div
+        class="column is-half-desktop is-three-quarters-tablet is-full-mobile has-background-light has-text-centered">
+        <h1 class="is-size-5 has-text-centered cart-product-title">{{this.item.title}}</h1>
+
+        <hr class="is-marginless">
+
+        <span class="is-pulled-left price-box-wrapper">
+          <span class="price-text">Price:</span>
+          <span class="shoping-cart-price-box">${{this.price}}</span>
+        </span>
+        <span class="icon has-text-success">
+          <i class="fas fa-plus"></i>
+        </span>
+        <span class="icon has-text-danger">
+          <i class="fas fa-minus"></i>
+        </span>
+        <span class="icon has-text-danger">
+          <i class="fas fa-trash"></i>
+        </span>
+        <span class="is-pulled-right count-badge-wrapper">
+          <span class="count-badge-text">Quantity:</span>
+          <span class="badge count-badge">{{this.quantity}}</span>
+        </span>
+      </div>
+    </div>
+    {{/each}}
+
+    <div class="columns is-centered">
+      <div class="column is-half-desktop is-three-quarters-tablet is-full-mobile">
+        <hr class="is-marginless">
+      </div>
+    </div>
+
+    <div class="columns is-centered">
+      <div class="column is-half-desktop is-three-quarters-tablet is-full-mobile">
+        <h1 class="is-size-4">Total Price: ${{formatPrice totalPrice}}</h1>
+        <h1 class="is-size-4">Total Quantity: {{totalQuantity}}</h1>
+      </div>
+    </div>
+    {{else}}
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-half-desktop is-three-quarters-tablet is-full-mobile has-background-light">
+        <h1 class="is-size-2">No items in cart</h1>
+      </div>
+    </div>
+    {{/if}}
+  </div>
+</div>

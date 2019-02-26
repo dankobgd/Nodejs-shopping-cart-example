@@ -16,4 +16,10 @@ module.exports = {
     }
     return newText;
   },
+  formatPrice(price) {
+    return price.toFixed(2);
+  },
+  debug(ctx) {
+    return JSON.stringify(ctx, null, 2);
+  },
 };
