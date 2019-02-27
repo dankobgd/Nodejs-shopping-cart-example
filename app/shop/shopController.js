@@ -70,3 +70,17 @@ module.exports.clearCart = (req, res, next) => {
   req.session.cart = cart;
   res.redirect('/shopping-cart');
 };
+
+module.exports.getCheckout = (req, res, next) => {
+  if (!req.session.cart) {
+    return res.redirect('/shopping-cart');
+  }
+
+  const cart = new Cart(req.session.cart);
+
+  res.render('shop/checkout', {title: 'Checkout', csrfToken: req.csrfToken(), totalPrice: cart.totalPrice});
+};
+
+module.exports.postCheckout = (req, res, next) => {
+  console.log(req.body);
+};

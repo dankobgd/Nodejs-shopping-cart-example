@@ -12,6 +12,8 @@ module.exports = function apiRoutes() {
   router.get('/remove-one/:productId', mw.catchErrors(c.shop.removeOne));
   router.get('/remove-all/:productId', mw.catchErrors(c.shop.removeAll));
   router.get('/clear-cart', mw.catchErrors(c.shop.clearCart));
+  router.get('/checkout', mw.csrf(), mw.catchErrors(c.shop.getCheckout));
+  router.post('/checkout', mw.catchErrors(c.shop.postCheckout));
 
   // ## User
   router.get('/signup', mw.redirectAuthed, mw.csrf(), mw.catchErrors(c.user.getSignup));
