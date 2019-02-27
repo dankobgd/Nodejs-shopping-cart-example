@@ -1,5 +1,6 @@
 const ShopService = require('./shopService');
 const Cart = require('./cart');
+const config = require('../../config/');
 
 module.exports.get = async (req, res, next) => {
   const productsList = await ShopService.getProducts();
@@ -71,16 +72,45 @@ module.exports.clearCart = (req, res, next) => {
   res.redirect('/shopping-cart');
 };
 
-module.exports.getCheckout = (req, res, next) => {
+module.exports.charge = async (req, res, next) => {
   if (!req.session.cart) {
     return res.redirect('/shopping-cart');
   }
 
+  const {
+    stripeToken,
+    stripeTokenType,
+    stripeEmail,
+    stripeBillingName,
+    stripeBillingAddressCountry,
+    stripeBillingAddressCountryCode,
+    stripeBillingAddressZip,
+    stripeBillingAddressLine1,
+    stripeBillingAddressCity,
+    stripeShippingName,
+    stripeShippingAddressCountry,
+    stripeShippingAddressCountryCode,
+    stripeShippingAddressZip,
+    stripeShippingAddressLine1,
+    stripeShippingAddressCity
+  } = req.body;
+
   const cart = new Cart(req.session.cart);
+  const stripe = require('stripe')((config.stripe.secret));
 
-  res.render('shop/checkout', {title: 'Checkout', csrfToken: req.csrfToken(), totalPrice: cart.totalPrice});
-};
+  const customer = await stripe.customers.create({
+    email: stripeEmail
+  });
 
-module.exports.postCheckout = (req, res, next) => {
-  console.log(req.body);
+  const charge = await stripe.charges.create({
+    customer,
+    amount: cart.stripeAmmount,
+    currency: 'usd',
+    description: 'Example charge',
+    source: stripeToken,
+  });
+
+  cart.clearCart();
+  req.session.cart = null;
+  res.redirect('/profile');
 };

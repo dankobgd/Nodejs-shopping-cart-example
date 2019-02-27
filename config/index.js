@@ -16,12 +16,18 @@ const developmentConfig = {
     maxAge: 3600000, // 1 hour
     expires: new Date(Date.now() + 3600000),
   },
+  stripe: {
+    secret: process.env.STRIPE_SECRET_KEY
+  },
   email: {},
 };
 
 const productionConfig = {
   session: {
     secret: process.env.SESSION_SECRET,
+  },
+  stripe: {
+    secret: process.env.STRIPE_SECRET_KEY
   },
   email: {},
 };

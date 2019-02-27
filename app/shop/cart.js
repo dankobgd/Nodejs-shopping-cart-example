@@ -5,6 +5,10 @@ class Cart {
     this.totalPrice = totalPrice;
   }
 
+  get stripeAmmount() {
+    return this.totalPrice * 100
+  }
+
   addItem(item, id) {
     if (!this.items[id]) {
       this.items[id] = {item, quantity: 0, price: 0};

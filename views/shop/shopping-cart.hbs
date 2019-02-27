@@ -50,7 +50,16 @@
         <hr>
 
         <a class="button" href="/clear-cart">Clear Cart Items</a>
-        <a class="button" href="/checkout">Checkout</a>
+
+        <!-- Stripe checkout toggle -->
+        <form action="/charge" method="POST">
+          <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+            data-key="pk_test_UMv9tcoaZfgnFNKYDou3b1gV" data-amount="{{stripeAmmount totalPrice}}"
+            data-name="Nodejs demo stripe" data-description="stripe checkout"
+            data-image="https://stripe.com/img/documentation/checkout/marketplace.png" data-locale="auto"
+            data-zip-code="true" data-billingAddress="true" data-shippingAddress="true">
+            </script>
+        </form>
       </div>
     </div>
     {{else}}
@@ -62,3 +71,8 @@
     {{/if}}
   </div>
 </div>
+
+
+{{#contentFor 'scripts'}}
+<script src="/js/checkout.js"></script>
+{{/contentFor}}

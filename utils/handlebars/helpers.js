@@ -1,8 +1,13 @@
 module.exports = {
-  section(name, options) {
-    if (!this._sections) this._sections = {};
-    this._sections[name] = options.fn(this);
-    return null;
+  block(name) {
+    const blocks = this._blocks;
+    const content = blocks && blocks[name];
+    return content ? content.join('\n') : null;
+  },
+  contentFor(name, options) {
+    const blocks = this._blocks || (this._blocks = {});
+    const block = blocks[name] || (blocks[name] = []);
+    block.push(options.fn(this));
   },
   truncate(length, text) {
     const words = text.split(' ');
@@ -18,6 +23,9 @@ module.exports = {
   },
   formatPrice(price) {
     return price.toFixed(2);
+  },
+  stripeAmmount(val) {
+    return val * 100;
   },
   debug(ctx) {
     return JSON.stringify(ctx, null, 2);
