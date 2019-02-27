@@ -8,6 +8,10 @@ module.exports = function apiRoutes() {
   router.get('/', mw.catchErrors(c.shop.get));
   router.get('/shopping-cart', mw.requireLogin, mw.catchErrors(c.shop.getShoppingCart));
   router.get('/add-to-cart/:productId', mw.catchErrors(c.shop.getAddToCart));
+  router.get('/add-one/:productId', mw.catchErrors(c.shop.addOne));
+  router.get('/remove-one/:productId', mw.catchErrors(c.shop.removeOne));
+  router.get('/remove-all/:productId', mw.catchErrors(c.shop.removeAll));
+  router.get('/clear-cart', mw.catchErrors(c.shop.clearCart));
 
   // ## User
   router.get('/signup', mw.redirectAuthed, mw.csrf(), mw.catchErrors(c.user.getSignup));

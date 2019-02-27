@@ -39,3 +39,34 @@ module.exports.getShoppingCart = async (req, res, next) => {
     totalQuantity: cart.totalQuantity,
   });
 };
+
+module.exports.addOne = (req, res, next) => {
+  const {productId} = req.params;
+  const cart = new Cart(req.session.cart);
+  cart.addOne(productId);
+  req.session.cart = cart;
+  res.redirect('/shopping-cart');
+};
+
+module.exports.removeOne = (req, res, next) => {
+  const {productId} = req.params;
+  const cart = new Cart(req.session.cart);
+  cart.removeOne(productId);
+  req.session.cart = cart;
+  res.redirect('/shopping-cart');
+};
+
+module.exports.removeAll = (req, res, next) => {
+  const {productId} = req.params;
+  const cart = new Cart(req.session.cart);
+  cart.removeAll(productId);
+  req.session.cart = cart;
+  res.redirect('/shopping-cart');
+};
+
+module.exports.clearCart = (req, res, next) => {
+  const cart = new Cart(req.session.cart);
+  cart.clearCart();
+  req.session.cart = cart;
+  res.redirect('/shopping-cart');
+};
