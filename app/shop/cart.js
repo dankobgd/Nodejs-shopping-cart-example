@@ -6,7 +6,7 @@ class Cart {
   }
 
   get stripeAmmount() {
-    return this.totalPrice * 100
+    return Math.round(this.totalPrice.toFixed(2) * 100);
   }
 
   addItem(item, id) {
