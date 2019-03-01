@@ -83,7 +83,7 @@ module.exports.charge = async (req, res, next) => {
   try {
     const customer = await stripe.customers.create({
       email: req.body.stripeEmail,
-      source: req.body.stripeToken
+      source: req.body.stripeToken,
     });
 
     const charge = await stripe.charges.create({
@@ -92,6 +92,24 @@ module.exports.charge = async (req, res, next) => {
       description: 'Example charge',
       customer: customer.id,
     });
+
+    const order = {
+      chargeAmount: charge.amount,
+      chargeToken: charge.id,
+      receiptUrl: charge.receipt_url,
+      userId: req.user.id,
+      ...req.body,
+    };
+
+    const orderId = await ShopService.addOrder(order);
+
+    const cartList = cart.getItemsList().map(obj => ({
+      orderId: orderId[0],
+      productId: obj.item.id,
+      quantity: obj.quantity,
+    }));
+
+    await ShopService.addOrderedCartItems(cartList);
   } catch (err) {
     console.error('Stripe Error: ', err);
   }

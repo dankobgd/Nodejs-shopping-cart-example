@@ -7,4 +7,10 @@ module.exports = {
   getProducts() {
     return knex('products');
   },
+  addOrder(order) {
+    return knex('orders').insert(order);
+  },
+  addOrderedCartItems(items) {
+    return knex('cartList').insert(items);
+  },
 };
