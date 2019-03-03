@@ -55,4 +55,29 @@ module.exports = {
     delete withoutPw.password;
     return withoutPw;
   },
+
+  getOrderedItems(id) {
+    return knex.raw(
+      `
+    SELECT p.title,
+      c.quantity,
+      p.price,
+      (p.price * c.quantity) AS combined,
+      o.chargeToken AS token,
+      o.chargeAmount AS totalPrice,
+      o.id,
+      o.receiptUrl,
+      o.created_at
+    FROM users u
+      INNER JOIN
+      orders o ON u.id = o.userId
+      INNER JOIN
+      cartList c ON o.id = c.orderId
+      INNER JOIN
+      products p ON c.productId = p.id
+      where u.id = ?
+    ORDER BY o.created_at DESC;`,
+      [id]
+    );
+  },
 };

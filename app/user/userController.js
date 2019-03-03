@@ -12,7 +12,32 @@ module.exports.getSignin = async (req, res, next) => {
 
 // Show profile page
 module.exports.getProfile = async (req, res, next) => {
-  res.render('user/profile', {title: 'profile'});
+  const originalOrders = await UserService.getOrderedItems(req.user.id);
+  const orders = [];
+
+  originalOrders.forEach(
+    (function(hash) {
+      return function(a) {
+        if (!hash[a.id]) {
+          hash[a.id] = {
+            id: a.id,
+            totalPrice: a.totalPrice,
+            token: a.token,
+            receiptUrl: a.receiptUrl,
+            orderDate: a.created_at,
+            items: [],
+          };
+          orders.push(hash[a.id]);
+        }
+        hash[a.id].items.push({title: a.title, price: a.price, quantity: a.quantity, combined: a.combined});
+      };
+    })(Object.create(null))
+  );
+
+  res.render('user/profile', {
+    title: 'profile',
+    orders,
+  });
 };
 
 // Post sign up page

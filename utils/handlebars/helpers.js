@@ -24,10 +24,16 @@ module.exports = {
   formatPrice(price) {
     return price.toFixed(2);
   },
-  stripeAmmount(val) {
-    return val * 100;
-  },
   debug(ctx) {
     return JSON.stringify(ctx, null, 2);
+  },
+  stripeCentAmount(val) {
+    return val * 100;
+  },
+  stripeDollarAmount(ammount) {
+    return `$${ammount / 100}`;
+  },
+  round(num) {
+    return num.toFixed(2);
   },
 };

@@ -109,7 +109,43 @@
   }
 }
 
-.cart-product-title {
+/* profile orders */
+.profile-title {
+  color: #6b81b4;
+  margin: 2rem 0;
+}
+
+.orders-accordion {
+  border: 1px solid #dbdbdb;
+  border-bottom: none;
+}
+
+.accordion-content {
+  border-top: 1px solid #dbdbdb !important;
+}
+
+.order-total-price-text,
+.order-date-text {
+  color: #8f8f8f;
+}
+
+.order-total-price-val,
+.order-date-val,
+.order-token-text {
   font-weight: 600;
-  margin-bottom: 3px;
+}
+
+@media screen and (max-width: 640px) {
+  .order-total-price-text,
+  .order-date-text {
+    display: none;
+  }
+}
+
+.order-single {
+  margin-top: 1rem;
+}
+
+.order-single table {
+  overflow-x: auto;
 }
