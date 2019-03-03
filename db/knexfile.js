@@ -11,18 +11,7 @@ module.exports = {
       directory: path.join(__dirname, './migrations/'),
       seeds: path.join(__dirname, './seeds/'),
     },
-  },
-
-  sex: {
-    client: 'sqlite3',
-    connection: {
-      filename: path.join(__dirname, './shop.db'),
-    },
-    migrations: {
-      tableName: 'knex_migrations',
-      directory: path.join(__dirname, './migrations/'),
-      seeds: path.join(__dirname, './seeds/'),
-    },
+    useNullAsDefault: true,
   },
 
   production: {
@@ -43,5 +32,6 @@ module.exports = {
       directory: './migrations/',
       seeds: './seeds/',
     },
+    useNullAsDefault: true,
   },
 };
