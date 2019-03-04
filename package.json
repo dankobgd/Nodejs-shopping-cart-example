@@ -26,6 +26,7 @@
     "knex": "^0.16.3",
     "morgan": "~1.9.0",
     "nodemailer": "^5.1.1",
+    "puppeteer": "^1.12.2",
     "sqlite3": "^4.0.6",
     "stripe": "^6.25.1"
   },

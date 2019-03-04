@@ -13,17 +13,17 @@
           <span class="price-text">Price:</span>
           <span class="shoping-cart-price-box">${{formatPrice this.price}}</span>
         </span>
-        <a href="/add-one/{{this.item.id}}">
+        <a href="/add-one/{{this.item.id}}" class="tooltip is-tooltip-bottom" data-tooltip="Add one">
           <span class="icon has-text-success">
             <i class="fas fa-plus"></i>
           </span>
         </a>
-        <a href="/remove-one/{{this.item.id}}">
+        <a href="/remove-one/{{this.item.id}}" class="tooltip is-tooltip-bottom" data-tooltip="Remove one">
           <span class="icon has-text-danger">
             <i class="fas fa-minus"></i>
           </span>
         </a>
-        <a href="/remove-all/{{this.item.id}}">
+        <a href="/remove-all/{{this.item.id}}" class="tooltip is-tooltip-bottom" data-tooltip="Remove Group">
           <span class="icon has-text-danger">
             <i class="fas fa-trash"></i>
           </span>
