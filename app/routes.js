@@ -21,6 +21,10 @@ module.exports = function apiRoutes() {
   router.post('/signin', mw.catchErrors(c.user.postSignin));
   router.get('/profile', mw.requireLogin, mw.catchErrors(c.user.getProfile));
   router.get('/logout', mw.catchErrors(c.user.logout));
+  router.get('/forgot', mw.csrf(), mw.catchErrors(c.user.getForgotPassword));
+  router.post('/forgot', mw.catchErrors(c.user.postForgotPassword));
+  router.get('/reset/:token', mw.csrf(), mw.catchErrors(c.user.getResetPassword));
+  router.post('/reset/:token', mw.catchErrors(c.user.postResetPassword));
 
   return router;
 };

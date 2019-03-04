@@ -17,9 +17,16 @@ const developmentConfig = {
     expires: new Date(Date.now() + 3600000),
   },
   stripe: {
-    secret: process.env.STRIPE_SECRET_KEY
+    secret: process.env.STRIPE_SECRET_KEY,
   },
-  email: {},
+  email: {
+    service: process.env.MAIL_SERVICE,
+    host: process.env.MAIL_HOST,
+    port: process.env.MAIL_PORT,
+    user: process.env.MAIL_USER,
+    pass: process.env.MAIL_PASS,
+    from: process.env.MAIL_FROM,
+  },
 };
 
 const productionConfig = {
@@ -27,9 +34,16 @@ const productionConfig = {
     secret: process.env.SESSION_SECRET,
   },
   stripe: {
-    secret: process.env.STRIPE_SECRET_KEY
+    secret: process.env.STRIPE_SECRET_KEY,
   },
-  email: {},
+  email: {
+    service: process.env.MAIL_SERVICE,
+    host: process.env.MAIL_HOST,
+    port: process.env.MAIL_PORT,
+    user: process.env.MAIL_USER,
+    pass: process.env.MAIL_PASS,
+    from: process.env.MAIL_FROM,
+  },
 };
 
 function getEnvironmentConfig(env) {
