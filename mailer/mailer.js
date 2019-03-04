@@ -4,7 +4,6 @@ const nodemailer = require('nodemailer');
 const juice = require('juice');
 const htmlToText = require('html-to-text');
 const Handlebars = require('handlebars');
-const exphbs = require('express-handlebars');
 const config = require('../config/');
 
 const transport = nodemailer.createTransport({
