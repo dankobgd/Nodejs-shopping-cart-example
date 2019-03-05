@@ -140,6 +140,10 @@
   .order-date-text {
     display: none;
   }
+
+  .receipt-actions-wrapper {
+    margin-top: 1rem;
+  }
 }
 
 .order-single {
@@ -148,4 +152,8 @@
 
 .order-single table {
   overflow-x: auto;
+}
+
+.btn-pdf-download {
+  margin-right: 4px;
 }

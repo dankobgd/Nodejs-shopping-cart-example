@@ -1,3 +1,4 @@
+const stream = require('stream');
 const UserService = require('./userService');
 
 // GET register page
@@ -170,4 +171,16 @@ module.exports.postResetPassword = async (req, res, next) => {
   await UserService.sendResetPasswordConfirmationEmail(emailOpts);
   req.session.successMessage = `Password successfuly changed for the account: ${ret.email}`;
   res.redirect('/signin');
+};
+
+// GET generate PDF
+module.exports.generatePdf = async (req, res, next) => {
+  const pdf = await UserService.generateOrdersPdf();
+  const filename = 'orders.pdf';
+  const readStream = new stream.PassThrough();
+
+  readStream.end(pdf);
+  res.set('Content-disposition', `attachment; filename=${filename}`);
+  res.set('Content-Type', 'application/pdf');
+  readStream.pipe(res);
 };

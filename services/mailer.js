@@ -18,7 +18,7 @@ const transport = nodemailer.createTransport({
 });
 
 const generateHTML = (template, context = {}) => {
-  const templatePath = path.join(__dirname, 'templates', `${template}.hbs`);
+  const templatePath = path.join(__dirname, '..', 'templates', `${template}.hbs`);
   const source = fs.readFileSync(templatePath, 'utf-8');
   const compiledTemplate = Handlebars.compile(source);
   const withContext = compiledTemplate(context);

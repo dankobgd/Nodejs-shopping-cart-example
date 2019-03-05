@@ -1,9 +1,11 @@
 const Joi = require('joi');
 const crypto = require('crypto');
 const bcrypt = require('bcryptjs');
+const puppeteer = require('puppeteer');
 const {signupSchema, loginSchema, forgotSchema, resetSchema} = require('./validations');
-const mailer = require('../../mailer/mailer');
+const mailer = require('../../services/mailer');
 const knex = require('../../db/connection');
+const compileTemplate = require('../../utils/compileTemplate');
 
 function hashPassword(pw) {
   const saltFactor = 12;
@@ -117,6 +119,31 @@ module.exports = {
     );
   },
 
+  getSpecificOrders(userId, orderId) {
+    return knex.raw(
+      `
+    SELECT p.title,
+      c.quantity,
+      p.price,
+      (p.price * c.quantity) AS combined,
+      o.chargeToken AS token,
+      o.chargeAmount AS totalPrice,
+      o.id,
+      o.receiptUrl,
+      o.created_at
+    FROM users u
+      INNER JOIN
+      orders o ON u.id = o.userId
+      INNER JOIN
+      cartList c ON o.id = c.orderId
+      INNER JOIN
+      products p ON c.productId = p.id
+      WHERE u.id = ? AND o.id = ?
+    ORDER BY o.created_at DESC;`,
+      [userId, orderId]
+    );
+  },
+
   async updateResetToken(email, token) {
     await knex('users')
       .where('email', email)
@@ -160,5 +187,24 @@ module.exports = {
 
   sendResetPasswordConfirmationEmail(obj) {
     return mailer.send(obj);
+  },
+
+  async generateOrdersPdf() {
+    try {
+      const browser = await puppeteer.launch();
+      const page = await browser.newPage();
+
+      await page.setContent('<h1>Test</h1>');
+      await page.emulateMedia('screen');
+      const buffer = await page.pdf({
+        format: 'A4',
+        printBackground: true,
+      });
+
+      return buffer;
+    } catch (err) {
+      console.log('err: ', err);
+      throw err;
+    }
   },
 };
