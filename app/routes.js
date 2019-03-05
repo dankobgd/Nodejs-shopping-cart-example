@@ -25,7 +25,7 @@ module.exports = function apiRoutes() {
   router.post('/forgot', mw.catchErrors(c.user.postForgotPassword));
   router.get('/reset/:token', mw.csrf(), mw.catchErrors(c.user.getResetPassword));
   router.post('/reset/:token', mw.catchErrors(c.user.postResetPassword));
-  router.get('/orders-pdf', mw.catchErrors(c.user.generatePdf));
+  router.get('/orders-pdf/:orderId', mw.catchErrors(c.user.generatePdf));
 
   return router;
 };

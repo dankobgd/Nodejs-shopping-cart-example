@@ -97,24 +97,24 @@ module.exports = {
   getOrderedItems(id) {
     return knex.raw(
       `
-    SELECT p.title,
-      c.quantity,
-      p.price,
-      (p.price * c.quantity) AS combined,
-      o.chargeToken AS token,
-      o.chargeAmount AS totalPrice,
-      o.id,
-      o.receiptUrl,
-      o.created_at
-    FROM users u
-      INNER JOIN
-      orders o ON u.id = o.userId
-      INNER JOIN
-      cartList c ON o.id = c.orderId
-      INNER JOIN
-      products p ON c.productId = p.id
-      where u.id = ?
-    ORDER BY o.created_at DESC;`,
+      SELECT p.title,
+            c.quantity,
+            p.price,
+            (p.price * c.quantity) AS combined,
+            o.chargeToken AS token,
+            o.chargeAmount AS totalPrice,
+            o.id,
+            o.receiptUrl,
+            o.created_at
+      FROM users u
+            INNER JOIN
+            orders o ON u.id = o.userId
+            INNER JOIN
+            cartList c ON o.id = c.orderId
+            INNER JOIN
+            products p ON c.productId = p.id
+      WHERE u.id = ?
+      ORDER BY o.created_at DESC;`,
       [id]
     );
   },
@@ -122,24 +122,25 @@ module.exports = {
   getSpecificOrders(userId, orderId) {
     return knex.raw(
       `
-    SELECT p.title,
-      c.quantity,
-      p.price,
-      (p.price * c.quantity) AS combined,
-      o.chargeToken AS token,
-      o.chargeAmount AS totalPrice,
-      o.id,
-      o.receiptUrl,
-      o.created_at
-    FROM users u
-      INNER JOIN
-      orders o ON u.id = o.userId
-      INNER JOIN
-      cartList c ON o.id = c.orderId
-      INNER JOIN
-      products p ON c.productId = p.id
-      WHERE u.id = ? AND o.id = ?
-    ORDER BY o.created_at DESC;`,
+      SELECT p.title,
+            c.quantity,
+            p.price,
+            (p.price * c.quantity) AS combined,
+            o.chargeToken AS token,
+            o.chargeAmount AS totalPrice,
+            o.id,
+            o.receiptUrl,
+            o.created_at
+      FROM users u
+            INNER JOIN
+            orders o ON u.id = o.userId
+            INNER JOIN
+            cartList c ON o.id = c.orderId
+            INNER JOIN
+            products p ON c.productId = p.id
+      WHERE u.id = ? AND
+            o.id = ?
+      ORDER BY o.created_at DESC;`,
       [userId, orderId]
     );
   },
@@ -189,12 +190,13 @@ module.exports = {
     return mailer.send(obj);
   },
 
-  async generateOrdersPdf() {
+  async generateOrdersPdf(ordersContext) {
     try {
       const browser = await puppeteer.launch();
       const page = await browser.newPage();
+      const ordersHTML = await compileTemplate('orders-pdf', ordersContext);
 
-      await page.setContent('<h1>Test</h1>');
+      await page.setContent(ordersHTML);
       await page.emulateMedia('screen');
       const buffer = await page.pdf({
         format: 'A4',
@@ -206,5 +208,36 @@ module.exports = {
       console.log('err: ', err);
       throw err;
     }
+  },
+
+  transformOrdersForDisplay(arr) {
+    const orders = [];
+
+    /* eslint no-param-reassign: "off" */
+    arr.forEach(
+      (function(hashMap) {
+        return function(item) {
+          if (!hashMap[item.id]) {
+            hashMap[item.id] = {
+              id: item.id,
+              totalPrice: item.totalPrice,
+              token: item.token,
+              receiptUrl: item.receiptUrl,
+              orderDate: item.created_at,
+              items: [],
+            };
+            orders.push(hashMap[item.id]);
+          }
+          hashMap[item.id].items.push({
+            title: item.title,
+            price: item.price,
+            quantity: item.quantity,
+            combined: item.combined,
+          });
+        };
+      })(Object.create(null))
+    );
+
+    return orders;
   },
 };

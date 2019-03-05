@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Orders List</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+
+
+<body>
+  <div style="padding: 1rem;">
+    {{#each this}}
+    <div>
+      <h1 class="is-size-3 has-text-centered profile-title" style="margin-bottom: 2rem;">Orders List</h1>
+      <p>Order DATE: <strong>{{orderDate}}</strong></p>
+      <p>Order Payment ID : <strong>{{token}}</strong></p>
+      <p>total Charge: <strong>{{stripeDollarAmount totalPrice}}</strong></p>
+      <a href="{{receiptUrl}}" style="display: block; margin-bottom: 1rem;">
+        <p>Receipt URL</p>
+      </a>
+    </div>
+
+
+    <div>
+      <table class="table is-responsive is-bordered is-fullwidth container">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Combined Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each items}}
+          <tr>
+            <td>{{title}}</td>
+            <td>${{round price}}</td>
+            <td>{{quantity}}</td>
+            <td>${{round combined}}</td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+    {{/each}}
+  </div>
+</body>
+
+</html>

@@ -14,27 +14,7 @@ module.exports.getSignin = async (req, res, next) => {
 // GET profile page
 module.exports.getProfile = async (req, res, next) => {
   const originalOrders = await UserService.getOrderedItems(req.user.id);
-  const orders = [];
-
-  /* eslint no-param-reassign: "off" */
-  originalOrders.forEach(
-    (function(hash) {
-      return function(a) {
-        if (!hash[a.id]) {
-          hash[a.id] = {
-            id: a.id,
-            totalPrice: a.totalPrice,
-            token: a.token,
-            receiptUrl: a.receiptUrl,
-            orderDate: a.created_at,
-            items: [],
-          };
-          orders.push(hash[a.id]);
-        }
-        hash[a.id].items.push({title: a.title, price: a.price, quantity: a.quantity, combined: a.combined});
-      };
-    })(Object.create(null))
-  );
+  const orders = UserService.transformOrdersForDisplay(originalOrders);
 
   res.render('user/profile', {
     title: 'profile',
@@ -175,7 +155,10 @@ module.exports.postResetPassword = async (req, res, next) => {
 
 // GET generate PDF
 module.exports.generatePdf = async (req, res, next) => {
-  const pdf = await UserService.generateOrdersPdf();
+  const ordersData = await UserService.getSpecificOrders(req.user.id, req.params.orderId);
+  const orders = UserService.transformOrdersForDisplay(ordersData);
+
+  const pdf = await UserService.generateOrdersPdf(orders);
   const filename = 'orders.pdf';
   const readStream = new stream.PassThrough();
 
