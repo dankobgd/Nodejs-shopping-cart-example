@@ -1,10 +1,8 @@
-const fs = require('fs');
-const path = require('path');
 const nodemailer = require('nodemailer');
 const juice = require('juice');
 const htmlToText = require('html-to-text');
-const Handlebars = require('handlebars');
 const config = require('../config/');
+const compileTemplate = require('../utils/compileTemplate');
 
 const transport = nodemailer.createTransport({
   service: config.email.service,
@@ -17,17 +15,14 @@ const transport = nodemailer.createTransport({
   },
 });
 
-const generateHTML = (template, context = {}) => {
-  const templatePath = path.join(__dirname, '..', 'templates', `${template}.hbs`);
-  const source = fs.readFileSync(templatePath, 'utf-8');
-  const compiledTemplate = Handlebars.compile(source);
-  const withContext = compiledTemplate(context);
-  const inlined = juice(withContext);
+const generateHTML = async (templateName, context = {}) => {
+  const compiledTemplate = await compileTemplate(templateName, context);
+  const inlined = juice(compiledTemplate);
   return inlined;
 };
 
 module.exports.send = async opts => {
-  const html = generateHTML(opts.template, opts);
+  const html = await generateHTML(opts.template, opts);
   const text = htmlToText.fromString(html);
 
   const mailOptions = {

@@ -5,7 +5,7 @@
     <div class="columns is-centered" style="margin-bottom: 2rem;">
       <div
         class="column is-half-desktop is-three-quarters-tablet is-full-mobile has-background-light has-text-centered">
-        <h1 class="is-size-5 has-text-centered cart-product-title">{{this.item.title}}</h1>
+        <h1 class="is-size-5 has-text-centered cart-product-title"><strong>{{this.item.title}}</strong></h1>
 
         <hr class="is-marginless">
 
@@ -44,15 +44,14 @@
 
     <div class="columns is-centered">
       <div class="column is-half-desktop is-three-quarters-tablet is-full-mobile">
-        <h1 class="is-size-4">Total Price: ${{formatPrice totalPrice}}</h1>
-        <h1 class="is-size-4">Total Quantity: {{totalQuantity}}</h1>
+        <a class="button is-pulled-right" href="/clear-cart">Clear Cart</a>
+        <h1 class="is-size-5">Total Price: <strong>${{formatPrice totalPrice}}</strong></h1>
+        <h1 class="is-size-5">Total Quantity: <strong>{{totalQuantity}}</strong></h1>
 
         <hr>
 
-        <a class="button" href="/clear-cart">Clear Cart Items</a>
-
         <!-- Stripe checkout toggle -->
-        <form action="/charge" method="POST">
+        <form action="/charge" method="POST" class="is-centered has-text-centered">
           <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
             data-key="pk_test_UMv9tcoaZfgnFNKYDou3b1gV" data-amount="{{stripeCentAmount totalPrice}}"
             data-name="Nodejs demo stripe" data-description="stripe checkout"
