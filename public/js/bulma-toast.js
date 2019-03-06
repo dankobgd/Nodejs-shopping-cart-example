@@ -2,10 +2,13 @@
 
 const defaults = {
   message: "Your message here",
-  duration: 2000,
-  position: "top-right",
+  type: "is-success",
+  duration: 3000,
+  position: "top-center",
   closeOnClick: true,
-  opacity: 1
+  dismissible: true,
+  opacity: 1,
+  animate: { in: 'fadeIn', out: 'fadeOut' },
 };
 
 let initialized = false;

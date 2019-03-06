@@ -23,6 +23,11 @@ module.exports.getAddToCart = async (req, res, next) => {
 
   cart.addItem(product[0], product[0].id);
   req.session.cart = cart;
+
+  if (!req.user) {
+    req.session.infoMsg = 'You successfuly added item to cart, please log in so you can see cart and checkout';
+  }
+
   res.redirect('/');
 };
 
@@ -116,5 +121,6 @@ module.exports.charge = async (req, res, next) => {
 
   cart.clearCart();
   req.session.cart = null;
+  req.session.successMessage = 'Payment successful!';
   res.redirect('/profile');
 };

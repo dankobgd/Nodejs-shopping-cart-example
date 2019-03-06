@@ -1,6 +1,5 @@
 <section class="section">
-  {{> success}}
-
+  {{> infoMsg}}
   {{#each products}}
   <div class="row columns">
     {{#each this}}
@@ -31,3 +30,13 @@
   </div>
   {{/each}}
 </section>
+
+
+{{#contentFor 'scripts'}}
+<script>
+  window.onload = () => {
+    const msg = '{{successMessage}}';
+    if (msg !== '') toast({ message: msg });
+  };
+</script>
+{{/contentFor}}

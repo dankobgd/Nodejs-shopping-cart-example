@@ -68,4 +68,10 @@
 
 {{#contentFor 'scripts'}}
 <script src="/js/profile.js"></script>
+<script>
+  window.onload = () => {
+    const msg = '{{successMessage}}';
+    if (msg !== '') toast({ message: msg });
+  };
+</script>
 {{/contentFor}}

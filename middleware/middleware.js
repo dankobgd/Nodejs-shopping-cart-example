@@ -20,7 +20,9 @@ module.exports.errorHandler = (err, req, res, next) => {
 
 module.exports.setLocals = (req, res, next) => {
   res.locals.successMessage = req.session.successMessage;
+  res.locals.infoMsg = req.session.infoMsg;
   delete req.session.successMessage;
+  delete req.session.infoMsg;
   res.locals.isAuthenticated = Boolean(req.user);
   res.locals.session = req.session;
   next();

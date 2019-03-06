@@ -52,6 +52,11 @@
   color: #fff;
 }
 
+.message.info-message {
+  background: rgb(211, 190, 0);
+  color: #fff;
+}
+
 /* Navbar */
 .navbar-menu {
   padding: 0 1.5rem;
